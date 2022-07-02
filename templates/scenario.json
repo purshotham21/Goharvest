@@ -1,0 +1,58 @@
+
+{
+  "totalLand": 250,
+  "scenarios":[
+    {
+      "weather": "rainfall",
+      "condition": "average",
+      "probability": 20,
+      "crops": [{
+        "name": "crop1",
+        "yield": 2,
+        "sellingPrice": 1200
+      },{
+        "name": "crop2",
+        "yield": 10,
+        "sellingPrice": 1510
+      },{
+        "name": "crop3",
+        "yield": 5,
+        "sellingPrice": 1900
+      }]
+    }, {
+      "weather": "rainfall",
+      "condition": "medium",
+      "probability": 50,
+      "crops": [{
+        "name": "crop1",
+        "yield": 8,
+        "sellingPrice": 1200
+      },{
+        "name": "crop2",
+        "yield":6,
+        "sellingPrice": 1510
+      },{
+        "name": "crop3",
+        "yield": 10,
+        "sellingPrice": 1900
+      }]
+    }, {
+      "weather": "rainfall",
+      "condition": "high",
+      "probability": 30,
+      "crops": [{
+        "name": "crop1",
+        "yield": 19,
+        "sellingPrice": 1200
+      },{
+        "name": "crop2",
+        "yield": 10,
+        "sellingPrice": 1510
+      },{
+        "name": "crop3",
+        "yield": 18,
+        "sellingPrice": 1900
+      }]
+    }
+  ]
+}

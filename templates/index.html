@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Go Harvest</title>
+  <!-- plugins:css -->
+  <link rel="stylesheet" href="static/vendors/feather/feather.css">
+  <link rel="stylesheet" href="static/vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" href="static/vendors/css/vendor.bundle.base.css">
+  <!-- endinject -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="static/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+  <link rel="stylesheet" href="static/vendors/ti-icons/css/themify-icons.css">
+  <link rel="stylesheet" type="text/css" href="static/js/select.dataTables.min.css">
+  <link rel="stylesheet" href="static/vendors/select2/select2.min.css">
+  <link rel="stylesheet" href="static/vendors/select2-bootstrap-theme/select2-bootstrap.min.css">
+  <!-- End plugin css for this page -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="static/css/vertical-layout-light/style.css">
+  <!-- endinject -->
+  <link rel="shortcut icon" href="static/images/favicon.pn" />
+</head>
+<body>
+  <div class="container-scroller">
+    <!-- partial:partials/_navbar.html -->
+    <nav class="navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
+        <a class="navbar-brand brand-logo mr-5" href="{{ url_for('dashboard') }}"><img src="static/images/logo.PNG" class="mr-2" alt="logo"/></a>
+<!--        <a class="navbar-brand brand-logo-mini" href="index.html"><img src="static/images/logo-mini.svg" alt="logo"/></a>-->
+      </div>
+      <div class="navbar-menu-wrapper d-flex align-items-center justify-content-end">
+        <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+          <span class="icon-menu"></span>
+        </button>
+        <ul class="navbar-nav mr-lg-2">
+          <li class="nav-item nav-search d-none d-lg-block">
+            <div class="input-group">
+              <div class="input-group-prepend hover-cursor" id="navbar-search-icon">
+                <span class="input-group-text" id="search">
+                  <i class="icon-search"></i>
+                </span>
+              </div>
+              <input type="text" class="form-control" id="navbar-search-input" placeholder="Search now" aria-label="search" aria-describedby="search">
+            </div>
+          </li>
+        </ul>
+        <ul class="navbar-nav navbar-nav-right">
+          <li class="nav-item nav-profile dropdown">
+            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="profileDropdown">
+              <i class="ti-user"></i>
+              <span class="d-none d-lg-inline-flex">{{session.name}}</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+              <a class="dropdown-item" href="{{ url_for('logout') }}">
+                <i class="ti-power-off text-primary"></i>
+                Logout
+              </a>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <!-- partial:partials/_settings-panel.html -->
+      <div class="theme-setting-wrapper">
+        <div id="settings-trigger"><a href="{{ url_for('intelligentFarming') }}"><i class="ti-plus"></i></a></div>
+      </div>
+      <!-- partial -->
+      <!-- partial:partials/_sidebar.html -->
+      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('dashboard') }}">
+              <i class="icon-grid menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('intelligentFarming') }}">
+              <i class="icon-paper menu-icon"></i>
+              <span class="menu-title">Intelligent Farming</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- partial -->
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="row">
+            <div class="col-md-12 grid-margin">
+              <div class="row">
+                <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                  <h3 class="font-weight-bold">Welcome {{session.name}}!</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card tale-bg">
+                <div class="card-people mt-auto">
+                  <img src="static/images/dashboard/people.svg" alt="people">
+                  <div class="weather-info">
+                    <div class="d-flex">
+                      <div>
+                       <!-- <div class="icon font-weight-normal"></div>-->
+                        <h4 class="summary font-weight-normal">----</h4>
+                      </div>
+                      <div class="ml-2">
+                        <h2 class="temp mb-0 font-weight-normal">-°C</h2>
+                        <h6 class="location font-weight-normal">----</h6>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+           <!-- <div class="col-md-6 grid-margin transparent">
+              <div class="row">
+                <div class="col-md-6 mb-4 stretch-card transparent">
+                  <div class="card card-tale">
+                    <div class="card-body">
+                      <p class="mb-4">Today’s Bookings</p>
+                      <p class="fs-30 mb-2">4006</p>
+                      <p>10.00% (30 days)</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-4 stretch-card transparent">
+                  <div class="card card-dark-blue">
+                    <div class="card-body">
+                      <p class="mb-4">Total Bookings</p>
+                      <p class="fs-30 mb-2">61344</p>
+                      <p>22.00% (30 days)</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-4 mb-lg-0 stretch-card transparent">
+                  <div class="card card-light-blue">
+                    <div class="card-body">
+                      <p class="mb-4">Number of Meetings</p>
+                      <p class="fs-30 mb-2">34040</p>
+                      <p>2.00% (30 days)</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 stretch-card transparent">
+                  <div class="card card-light-danger">
+                    <div class="card-body">
+                      <p class="mb-4">Number of Clients</p>
+                      <p class="fs-30 mb-2">47033</p>
+                      <p>0.22% (30 days)</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>-->
+          </div>
+
+          <div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card position-relative">
+                <div class="card-body">
+                  <div id="detailedReports" class="carousel slide detailed-report-carousel position-static pt-2" data-ride="carousel">
+                    <div class="carousel-inner">
+                      <div class="carousel-item active">
+                        <div class="row">
+                          <div class="col-md-12 col-xl-3 d-flex flex-column justify-content-start">
+                            <div class="ml-xl-4 mt-3">
+                            <p class="card-title">Latest Allocations</p>
+                              <h1 class="text-primary netProfit"></h1>
+                              <h3 class="font-weight-500 mb-xl-4 text-primary">Profit</h3>
+                              <p class="mb-2 mb-xl-0">Profit anticipated from efficient allocation.
+                              </p>
+                            </div>
+                            </div>
+                          <div class="col-md-12 col-xl-9">
+                            <div class="row">
+                              <div class="col-md-6 border-right">
+                                <div class="table-responsive mb-3 mb-md-0 mt-3">
+                                  <table class="table table-borderless report-table allocationsTable">
+                                  </table>
+                                </div>
+                              </div>
+                              <div class="col-md-6 mt-3">
+                                <canvas id="allocationsChart" style="width:100%;max-width:600px"></canvas>
+                                <div id="allocationsChart-legend" style="width:100%;max-width:600px"></div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#detailedReports" role="button" data-slide="prev">
+                      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#detailedReports" role="button" data-slide="next">
+                      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 stretch-card grid-margin">
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-title mb-0">Sales price</p>
+                  <div class="table-responsive">
+                    <table class="table table-borderless">
+                      <thead>
+                      <tr>
+                        <th class="pl-0  pb-2 border-bottom">Crops</th>
+                        <th class="border-bottom pb-2">Selling Price</th>
+                        <th class="border-bottom pb-2">Price change</th>
+                      </tr>
+                      </thead>
+                      <tbody class="sellingPrices">
+
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between">
+                    <p class="card-title">RainFall Chart - NORMAL, ACTUAL, DEVIATION(%)</p>
+                  </div>
+                  <p class="font-weight-500"> Text</p>
+                  <canvas id="rainFallChart" height="250"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between">
+                    <p class="card-title">Food grains and Pulses - (Growth Rate %)Inflation</p>
+                  </div>
+<!--                  <p class="font-weight-500"> Text</p>-->
+                  <canvas id="lineChart" height="250"></canvas>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex justify-content-between">
+                    <p class="card-title">Oil Seeds - (Growth Rate %)Inflation</p>
+                  </div>
+<!--                  <p class="font-weight-500"> Text</p>-->
+                  <canvas id="oilSeedsChart" height="250"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--<div class="row">
+            <div class="col-md-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <p class="card-title">History</p>
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="table-responsive">
+
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                </div>
+              </div>
+            </div>-->
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- partial:partials/_footer.html -->
+        <footer class="footer">
+          <div class="d-sm-flex justify-content-center justify-content-sm-between">
+            <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2022. All rights reserved.</span>
+            <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Hand-crafted & made with <i class="ti-heart text-danger ml-1"></i></span>
+          </div>
+        </footer>
+        <!-- partial -->
+      </div>
+      <!-- main-panel ends -->
+    </div>
+    <!-- page-body-wrapper ends -->
+  </div>
+  <!-- container-scroller -->
+
+  <!-- plugins:js -->
+  <script src="static/vendors/js/vendor.bundle.base.js"></script>
+  <!-- endinject -->
+  <!-- Plugin js for this page -->
+  <script src="static/vendors/chart.js/Chart.min.js"></script>
+  <script src="static/vendors/datatables.net/jquery.dataTables.js"></script>
+  <script src="static/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+  <script src="static/js/dataTables.select.min.js"></script>
+  <script src="static/vendors/select2/select2.min.js"></script>
+
+
+  <!-- End plugin js for this page -->
+  <!-- inject:js -->
+  <script src="static/js/off-canvas.js"></script>
+  <script src="static/js/hoverable-collapse.js"></script>
+  <script srrcc="static/js/template.js"></script>
+  <script src="static/js/settings.js"></script>
+  <script src="static/js/todolist.js"></script>
+  <!-- endinject -->
+  <!-- Custom js for this page-->
+  <script src="static/js/dashboard.js"></script>
+  <script src="static/js/select2.js"></script>
+  <script src="static/js/Chart.roundedBarCharts.js"></script>
+  <script>
+  var sellingPrices = {{ sellingprices|tojson }};
+    console.log( JSON.stringify(sellingPrices, null, "    ") );
+    for(var i = 0; i < sellingPrices.length; i++) {
+      var direction = sellingPrices[i].direction;
+      var color = "success";
+      if(direction=="down"){
+        color = "danger"
+      }
+
+      $(".sellingPrices")
+        .append("<tr><td class='pl-0'>"+sellingPrices[i].crop+
+        "</td><td><p class='mb-0'><span class='font-weight-bold mr-2'>$"+sellingPrices[i].price+
+        "</span></p></td><td><p class='mb-0 text-"+color+"'> <span class='font-weight-bold mr-2'>"+sellingPrices[i].priceChange+
+        "%</span><i class='ti-arrow-"+direction+"'></i></p></td></tr>");
+     }
+
+   var data = {
+      labels: ["2012-13",	"2013-14",	"2014-15",	"2015-16",	"2016-17",	"2017-18",	"2018-19",	"2019-20",	"2020-21",],
+      datasets: [{
+          label: 'Food grains and Puleses',
+          data: [3.46,115.1,124.5,128.4,137.3,152,142.6,146.7,159.6,159.3],
+          backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)'
+          ],
+          borderColor: [
+              'rgba(255,99,132,1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)'
+          ],
+          borderWidth: 1
+      },{
+          label: '(Growth Rate %)Inflation',
+          data: [0,0,8.2,3.1,6.9,10.7,-6.2,2.9,8.8,-0.2],
+          backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)'
+          ],
+          borderColor: [
+              'rgba(255,99,132,1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)'
+          ],
+          borderWidth: 1
+      }]
+  };
+  var options = {
+      scales: {
+          yAxes: [{
+              ticks: {
+                  beginAtZero:true
+              }
+          }]
+      },
+      legend: {
+          display: false
+      },
+      elements: {
+        point: {
+            radius: 0
+        }
+      }
+  };
+  if($("#lineChart").length) {
+    var lineChartCanvas = $("#lineChart").get(0).getContext("2d");
+    var lineChart = new Chart(lineChartCanvas, {
+      type: 'bar',
+      data: data,
+      options: options
+    });
+  }
+
+ var data1 = {
+      labels: ["2012-13",	"2013-14",	"2014-15",	"2015-16",	"2016-17",	"2017-18",	"2018-19",	"2019-20",	"2020-21",],
+      datasets: [{
+          label: 'Oil Seeds',
+          data: [1.12,126.8,125.6,129.2,136.6,136,129.9,140.5,151.4,161.7],
+          backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)'
+          ],
+          borderColor: [
+              'rgba(255,99,132,1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)'
+          ],
+          borderWidth: 1
+      },{
+          label: '(Growth Rate %)Inflation',
+          data: [0,0,-0.9,-2.9,5.7,-0.4,-4.5,8.2,7.8,6.8],
+          backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)'
+          ],
+          borderColor: [
+              'rgba(255,99,132,1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)'
+          ],
+          borderWidth: 1
+      }]
+  };
+  var options1 = {
+      scales: {
+          yAxes: [{
+              ticks: {
+                  beginAtZero:true
+              }
+          }]
+      },
+      legend: {
+          display: false
+      },
+      elements: {
+        point: {
+            radius: 0
+        }
+      }
+  };
+  if($("#oilSeedsChart").length) {
+    var lineChartCanvas = $("#oilSeedsChart").get(0).getContext("2d");
+    var lineChart = new Chart(lineChartCanvas, {
+      type: 'bar',
+      data: data1,
+      options: options1
+    });
+  }
+
+
+ var data2 = {
+      labels: ["Total Rainfall (Winter )","Total Rainfall (Pre Monsoon  )",	"Total Rainfall ( Monsoon  )",	"Total Rainfall (Post  Monsoon  )",	"Total Rainfall in Year 2021",],
+      datasets: [{
+          label: 'NORMAL',
+          data: [4.1,13.2,88.1,12.4,117.7,],
+          backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)'
+          ],
+          borderColor: [
+              'rgba(255,99,132,1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)'
+          ],
+          borderWidth: 1
+      },{
+          label: 'ACTUAL',
+          data: [2.8,15.5,87.5,17.8,123.5,],
+          backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)'
+          ],
+          borderColor: [
+              'rgba(255,99,132,1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)'
+          ],
+          borderWidth: 1
+      },
+      {
+          label: 'DEVIATION(%)',
+          data: [32,18,-1,44,5,],
+          backgroundColor: [
+              'rgba(255, 99, 132, 0.2)',
+              'rgba(54, 162, 235, 0.2)',
+              'rgba(255, 206, 86, 0.2)',
+              'rgba(75, 192, 192, 0.2)',
+              'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)'
+          ],
+          borderColor: [
+              'rgba(255,99,132,1)',
+              'rgba(54, 162, 235, 1)',
+              'rgba(255, 206, 86, 1)',
+              'rgba(75, 192, 192, 1)',
+              'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)'
+          ],
+          borderWidth: 1
+      }]
+  };
+  var options2 = {
+      scales: {
+          yAxes: [{
+              ticks: {
+                  beginAtZero:true
+              }
+          }]
+      },
+      legend: {
+          display: false
+      },
+      elements: {
+        point: {
+            radius: 0
+        }
+      }
+  };
+  if($("#rainFallChart").length) {
+    var lineChartCanvas = $("#rainFallChart").get(0).getContext("2d");
+    var lineChart = new Chart(lineChartCanvas, {
+      type: 'bar',
+      data: data2,
+      options: options2
+    });
+  }
+
+    var analytics = {{ analytics|tojson }};
+    console.log( JSON.stringify(analytics, null, "    ") );
+
+    var latestAnalytics = {{ latestAnalytics|tojson }};
+    console.log("latest analytics: "+latestAnalytics);
+    console.log( JSON.stringify(latestAnalytics, null, "    "));
+    $(".netProfit").append("$"+latestAnalytics.profit)
+    latestAnalytics = latestAnalytics.allocations
+    var cropsList = []
+    var allocationsList = []
+    for(var i = 0; i < latestAnalytics.length; i++) {
+      cropsList.push(latestAnalytics[i].crop)
+      allocationsList.push(latestAnalytics[i].allocation)
+      $(".allocationsTable")
+        .append("<tr>"+
+          "<td class='text-muted'>"+cropsList[i]+"</td>"+
+          "<td class='w-100 px-0'>"+
+            "<div class='progress progress-md mx-4'>"+
+              "<div class='progress-bar bg-primary' role='progressbar' style='width: "+allocationsList[i]+"%' aria-valuenow='"+allocationsList[i]+"' aria-valuemin='0' aria-valuemax='100'></div>"+
+            "</div>"+
+          "</td>"+
+          "<td><h5 class='font-weight-bold mb-0'>"+allocationsList[i]+"</h5></td>"+
+        "</tr>")
+    }
+
+if ($("#allocationsChart").length) {
+      var crops = cropsList;
+      var allocations =  allocationsList;
+      var areaData = {
+        labels: crops,
+        datasets: [{
+            data: allocationsList,
+            backgroundColor: [
+               "#4B49AC","#FFC100", "#248AFD",
+            ],
+            borderColor: "rgba(0,0,0,0)"
+          }
+        ]
+      };
+      var areaOptions = {
+        responsive: true,
+        maintainAspectRatio: true,
+        segmentShowStroke: false,
+        cutoutPercentage: 78,
+        elements: {
+          arc: {
+              borderWidth: 4
+          }
+        },
+        legend: {
+          display: false
+        },
+        tooltips: {
+          enabled: true
+        },
+        legendCallback: function(chart) {
+          var text = [];
+          text.push('<div class="report-chart">');
+            text.push('<div class="d-flex justify-content-between mx-4 mx-xl-5 mt-3"><div class="d-flex align-items-center"><div class="mr-3" style="width:20px; height:20px; border-radius: 50%; background-color: ' + chart.data.datasets[0].backgroundColor[0] + '"></div><p class="mb-0">'+crops[0]+'</p></div>');
+            text.push('<p class="mb-0">'+allocations[0]+'</p>');
+            text.push('</div>');
+            text.push('<div class="d-flex justify-content-between mx-4 mx-xl-5 mt-3"><div class="d-flex align-items-center"><div class="mr-3" style="width:20px; height:20px; border-radius: 50%; background-color: ' + chart.data.datasets[0].backgroundColor[1] + '"></div><p class="mb-0">'+crops[1]+'</p></div>');
+            text.push('<p class="mb-0">'+allocations[1]+'</p>');
+            text.push('</div>');
+            text.push('<div class="d-flex justify-content-between mx-4 mx-xl-5 mt-3"><div class="d-flex align-items-center"><div class="mr-3" style="width:20px; height:20px; border-radius: 50%; background-color: ' + chart.data.datasets[0].backgroundColor[2] + '"></div><p class="mb-0">'+crops[2]+'</p></div>');
+            text.push('<p class="mb-0">'+allocations[2]+'</p>');
+            text.push('</div>');
+          text.push('</div>');
+          return text.join("");
+        },
+      }
+      var northAmericaChartPlugins = {
+        beforeDraw: function(chart) {
+          var width = chart.chart.width,
+              height = chart.chart.height,
+              ctx = chart.chart.ctx;
+
+          ctx.restore();
+          var fontSize = 3.125;
+          ctx.font = "500 " + fontSize + "em sans-serif";
+          ctx.textBaseline = "middle";
+          ctx.fillStyle = "#13381B";
+
+          var text = (allocations[0]+allocations[1]+allocations[2]).toFixed(2),
+              textX = Math.round((width - ctx.measureText(text).width) / 2),
+              textY = height / 2;
+
+          ctx.fillText(text, textX, textY);
+          ctx.save();
+        }
+      }
+      var northAmericaChartCanvas = $("#allocationsChart").get(0).getContext("2d");
+      var northAmericaChart = new Chart(northAmericaChartCanvas, {
+        type: 'doughnut',
+        data: areaData,
+        options: areaOptions,
+        plugins: northAmericaChartPlugins
+      });
+      document.getElementById('allocationsChart-legend').innerHTML = northAmericaChart.generateLegend();
+    }
+
+  </script>
+  <!-- End custom js for this page-->
+</body>
+
+</html>
+
